@@ -1,5 +1,5 @@
 # % -- include/library.liq -- %
-# vim: ft=liq ts=4 sw=4 sts=4 et ai fdm=marker
+# vim: ft=liq ts=4 sw=4 sts=2 et ai fdm=marker
 
 ####################################
 # The server seeking function
@@ -40,10 +40,19 @@ def icy_update(v) =
   end
   meta = list.fold(split,[],l)
 
+  def upd(h)
+    icy.update_metadata(mount=streammount,
+                        password=streampass,
+                        host=h,
+                        protocol="http",
+                        port=80,
+                        meta)
+  end
+
   # Update metadata
-  icy.update_metadata(mount=streammount, password=streampass, host=nastream1,     protocol="http", port=80,   meta)
-  icy.update_metadata(mount=streammount, password=streampass, host=nastream2,     protocol="http", port=80,   meta)
-  icy.update_metadata(mount=streammount, password=streampass, host=nastream3,     protocol="http", port=80,   meta)
+  upd(nastream1)
+  upd(nastream2)
+  upd(nastream3)
   "Done !"
 end
 

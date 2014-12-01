@@ -1,4 +1,4 @@
-# vim: ft=liq ts=4 sw=4 sts=4 et ai fdm=marker
+# vim: ft=liq ts=4 sw=4 sts=2 et ai fdm=marker
 
 # % -- noagenda.liq -- %
 
@@ -7,8 +7,8 @@ set("log.file.path","/stor/nastream/logs/noagenda.log")
 set("init.concurrent",true)
 set("request.metadata_decoders.override",true)
 
-# Reset output if latency becomes >20s
-set("root.max_latency",20.)
+# Reset output if latency becomes >30s
+set("root.max_latency",30.)
 
 # Telnet settings
 set("server.telnet", true)
@@ -22,7 +22,7 @@ set("harbor.bind_addr","0.0.0.0")
 streamname  = "No Agenda Stream"
 streamdesc  = "All talk, no commercials. No Agenda."
 streamgenre = "Talk radio"
-streamurl   = "http://www.noagendashow.com/"
+streamurl   = "http://www.noagendastream.com/"
 
 # The actual funky stuff happens
 # via these included files
@@ -30,8 +30,9 @@ streamurl   = "http://www.noagendashow.com/"
 %include "include/library.liq"
 %include "include/radio.liq"
 
-def pushit(h)
+def pushit(h, i)
   output.icecast(%mp3.vbr(id3v2=true, internal_quality=4),
+                 id           = i,
                  host         = h,
                  port         = 80,
                  password     = streampass,
@@ -44,6 +45,6 @@ def pushit(h)
                  stream)
 end
 
-pushit(nastream1)
-pushit(nastream2)
-pushit(nastream3)
+pushit(nastream1, "huxley")
+pushit(nastream2, "orwell")
+pushit(nastream3, "sundance")
