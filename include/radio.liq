@@ -39,7 +39,7 @@ end
 # The timed result
 stream   = fallback(track_sensitive=false,
              [ switch(id="streamon", track_sensitive=false,
-                 [({(4w or 7w) and 16h44m49s-20h14m49s},
+                 [({(4w or 7w) and 16h44m49s-19h59m49s},
                    playout(onair, jig=true))]),
                playout(offair)])
 
