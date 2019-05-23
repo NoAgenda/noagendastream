@@ -33,7 +33,7 @@ def icy_update(v) =
   def split(l,v) =
     v = string.split(separator="==",v)
     if list.length(v) >= 2 then
-      list.append(l,[(list.nth(v,0),list.nth(v,1))])
+      list.append(l,[(list.nth(v,0,default=""),list.nth(v,1,default=""))])
     else
       l
     end
@@ -53,6 +53,8 @@ def icy_update(v) =
   upd(nastream1)
   upd(nastream2)
   upd(nastream3)
+  upd(nastream4)
+  upd(nastream5)
   "Done !"
 end
 

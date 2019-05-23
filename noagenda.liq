@@ -6,6 +6,7 @@
 set("log.file.path","/stor/nastream/logs/noagenda.log")
 set("init.concurrent",true)
 set("request.metadata_decoders.override",true)
+set("tag.encodings",["UTF-8","ISO-8859-1"])
 
 # Reset output if latency becomes >30s
 set("root.max_latency",30.)
@@ -35,6 +36,7 @@ def pushit(h, i)
                  id           = i,
                  host         = h,
                  port         = 80,
+                 encoding     = "UTF-8",
                  password     = streampass,
                  name         = streamname,
                  description  = streamdesc,
@@ -47,4 +49,6 @@ end
 
 pushit(nastream1, "huxley")
 pushit(nastream2, "orwell")
-pushit(nastream3, "sundance")
+pushit(nastream3, "quentin")
+pushit(nastream4, "kubrick")
+pushit(nastream5, "sundance")
