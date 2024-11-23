@@ -17,11 +17,9 @@ def audio_process(s)
   ratio = 3. # interactive.float("compress.ratio", 3.)
   threshold = interactive.float("compress.threshold", -15.)
 
-  k_up = interactive.float("norm.kup",0.005)
-  k_down = interactive.float("norm.kdn",0.1)
   target = interactive.float("norm.target", -13.)
 
-  s = normalize(target=target, k_up=k_up, k_down=k_down, s)
+  s = normalize(target=target, s)
   s = compress(gain=gain, ratio=ratio, threshold=threshold, s)
   s
 end
