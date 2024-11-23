@@ -4,14 +4,14 @@
 # Sound effects
 elevator = playlist.safe(id="elevator", reload_mode="watch",
                     mode="normal",
-                    "/stor/nastream/jingles/elevator.m3u")
+                    basepath ^ "/jingles/elevator.m3u")
 elevator = audio_to_stereo(elevator)
 elevator = rewrite_metadata([("title","$(title)"),
                              ("comment",streamurl)],elevator)
 
 sweeper  = playlist.safe(id="sweeper", reload_mode="watch",
                     mode="normal",
-                    "/stor/nastream/jingles/sweeper.m3u")
+                    basepath ^ "/jingles/sweeper.m3u")
 sweeper = audio_to_stereo(sweeper)
 sweeper = rewrite_metadata([("title","$(title)"),
                              ("comment",streamurl)],sweeper)
@@ -20,7 +20,7 @@ sweeper = rewrite_metadata([("title","$(title)"),
 nalist   = playlist(id="nalist", reload_mode="watch",
                     conservative=true,
                     mode="normal",
-                    "/stor/nastream/mp3s/playlist.m3u")
+                    basepath ^ "/mp3s/playlist.m3u")
 nalist   = audio_to_stereo(nalist)
 nalist   = rewrite_metadata([("title","$(title)"),
                              ("comment",streamurl)],nalist)

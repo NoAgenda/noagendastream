@@ -2,8 +2,11 @@
 
 # % -- noagenda.liq -- %
 
+# Read secrets including the basepath variable
+%include "include/secrets.liq"
+
 # Log dir
-set("log.file.path","/stor/nastream/logs/noagenda.log")
+set("log.file.path", basepath ^ "/logs/noagenda.log")
 set("init.concurrent",true)
 set("request.metadata_decoders.override",true)
 set("tag.encodings",["UTF-8","ISO-8859-1"])
@@ -27,7 +30,6 @@ streamurl   = "http://www.noagendastream.com/"
 
 # The actual funky stuff happens
 # via these included files
-%include "include/secrets.liq"
 %include "include/library.liq"
 %include "include/radio.liq"
 

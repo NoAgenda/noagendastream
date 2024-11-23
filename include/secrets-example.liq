@@ -1,6 +1,9 @@
 # % -- include/secrets.liq -- %
 # vim: ft=liq ts=4 sw=4 sts=2 et ai fdm=marker
 
+# All the paths will be prefixed with this path
+basepath = "/stor/nastream"
+
 # Stream private info
 streammount = "somemount"
 streampass  = "somepass"
