@@ -8,11 +8,19 @@ basepath = "/stor/nastream"
 streammount = "somemount"
 streampass  = "somepass"
 inpass      = "srcpass"
+
 streamport  = 3040
 adam_inport = 4700
 horo_inport = 4702
 also_inport = 4704
 noop_inport = 4800
-nastream1   = "stream1.example.com"
-nastream2   = "stream2.example.com"
-nastream3   = "stream3.example.com"
+
+nastream1_name = "alpha"
+nastream2_name = "beta"
+nastream3_name = "delta"
+nastream4_name = "gamma"
+
+nastream1_host = "nastream1.example.com"
+nastream2_host = "nastream2.example.com"
+nastream3_host = "nastream3.example.com"
+nastream4_host = "nastream4.example.com"

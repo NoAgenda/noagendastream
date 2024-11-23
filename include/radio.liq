@@ -24,6 +24,13 @@ nalist   = audio_to_stereo(nalist)
 nalist   = rewrite_metadata([("title","$(title)"),
                              ("comment",streamurl)],nalist)
 
+musiclist = playlist(id="musiclist", reload_mode="watch",
+                    mode="normal",
+                    basepath ^ "/mp3s/playlist-v4vmusic.m3u")
+musiclist = audio_to_stereo(musiclist)
+musiclist = rewrite_metadata([("title","$(title)"),
+                             ("comment",streamurl)],musiclist)
+
 # Input harbor
 adamlive   = input.harbor(id="adamlive", "/",
                         port=adam_inport,
@@ -77,6 +84,8 @@ stream   = fallback(track_sensitive=false,
 
 # ..which we want to process
 stream   = audio_process(stream)
+
+musicstream = audio_process(mksafe(rotate(id="music", [musiclist,sweeper])))
 
 # Register the seek function to the telnet server
 server.register(namespace=source.id(nalist),

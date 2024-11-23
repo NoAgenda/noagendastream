@@ -27,30 +27,40 @@ streamname  = "No Agenda Stream"
 streamdesc  = "All talk, no commercials. No Agenda."
 streamgenre = "Talk radio"
 streamurl   = "http://www.noagendastream.com/"
+musicname  = "No Agenda Stream v4v Music"
+musicdesc  = "All v4v music, no commercials. No Agenda."
+
 
 # The actual funky stuff happens
 # via these included files
 %include "include/library.liq"
 %include "include/radio.liq"
 
-def pushit(h, i)
+def pushit(i, h, n, d, m, s)
   output.icecast(%mp3.vbr(id3v2=true, internal_quality=4),
                  id           = i,
                  host         = h,
                  port         = streamport,
                  encoding     = "UTF-8",
                  password     = streampass,
-                 name         = streamname,
-                 description  = streamdesc,
+                 name         = n,
+                 description  = d,
                  genre        = streamgenre,
                  url          = streamurl,
-                 mount        = streammount,
+                 mount        = m,
                  icy_metadata = "true",
-                 stream)
+                 s)
 end
 
-pushit(nastream1, "huxley")
-pushit(nastream2, "orwell")
-pushit(nastream3, "quentin")
-pushit(nastream4, "kubrick")
-pushit(nastream5, "sundance")
+clock.assign_new(id="naclock",[
+  pushit(nastream1_name,  nastream1_host,  streamname,  streamdesc,  streammount,  stream),
+  pushit(nastream2_name,  nastream2_host,  streamname,  streamdesc,  streammount,  stream),
+  pushit(nastream3_name,  nastream3_host,  streamname,  streamdesc,  streammount,  stream),
+  pushit(nastream4_name,  nastream4_host,  streamname,  streamdesc,  streammount,  stream),
+
+  pushit(nastream1_name,  nastream1_host,  musicname,   musicdesc,   musicmount,   musicstream),
+  pushit(nastream2_name,  nastream2_host,  musicname,   musicdesc,   musicmount,   musicstream),
+  pushit(nastream3_name,  nastream3_host,  musicname,   musicdesc,   musicmount,   musicstream),
+  pushit(nastream4_name,  nastream4_host,  musicname,   musicdesc,   musicmount,   musicstream),
+
+])

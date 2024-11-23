@@ -52,7 +52,6 @@ def icy_update(v) =
   upd(nastream2)
   upd(nastream3)
   upd(nastream4)
-  upd(nastream5)
   "Done !"
 end
 
