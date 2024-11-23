@@ -18,7 +18,6 @@ sweeper = rewrite_metadata([("title","$(title)"),
 
 # List of shows
 nalist   = playlist(id="nalist", reload_mode="watch",
-                    conservative=true,
                     mode="normal",
                     basepath ^ "/mp3s/playlist.m3u")
 nalist   = audio_to_stereo(nalist)
