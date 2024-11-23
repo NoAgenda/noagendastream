@@ -35,7 +35,7 @@ def pushit(h, i)
   output.icecast(%mp3.vbr(id3v2=true, internal_quality=4),
                  id           = i,
                  host         = h,
-                 port         = 80,
+                 port         = streamport,
                  encoding     = "UTF-8",
                  password     = streampass,
                  name         = streamname,

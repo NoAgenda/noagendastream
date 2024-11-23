@@ -5,6 +5,11 @@
 streammount = "somemount"
 streampass  = "somepass"
 inpass      = "srcpass"
+streamport  = 3040
+adam_inport = 4700
+horo_inport = 4702
+also_inport = 4704
+noop_inport = 4800
 nastream1   = "stream1.example.com"
 nastream2   = "stream2.example.com"
 nastream3   = "stream3.example.com"

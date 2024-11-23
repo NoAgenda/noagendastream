@@ -27,7 +27,7 @@ nalist   = rewrite_metadata([("title","$(title)"),
 
 # Input harbor
 adamlive   = input.harbor(id="adamlive", "/",
-                        port=8000,
+                        port=adam_inport,
                         password=inpass,
                         icy=true)
 
@@ -35,13 +35,13 @@ adamlive   = input.harbor(id="adamlive", "/",
 horolive = rewrite_metadata([("title", "LIVE: Dvorak and Horowitz Unplugged"),
                              ("comment",streamurl)],
                              audio_to_stereo(input.harbor(id="horolive", "/",
-                             port=8002,
+                             port=horo_inport,
                              password=inpass,
                              icy=true)))
 
 # Input harbor
 alsolive   = input.harbor(id="alsolive", "/",
-                        port=8004,
+                        port=also_inport,
                         password=inpass,
                         icy=true)
 
@@ -49,7 +49,7 @@ alsolive   = input.harbor(id="alsolive", "/",
 # skip the currently playing podcast after disconnect
 # so, let's add another one, but 'noop' it - not activate it.
 nooplive   = input.harbor(id="nooplive", "/",
-                        port=9000,
+                        port=noop_inport,
                         password=inpass,
                         icy=true)
 

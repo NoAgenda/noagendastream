@@ -43,7 +43,7 @@ def icy_update(v) =
                         password=streampass,
                         host=h,
                         protocol="http",
-                        port=80,
+                        port=streamport,
                         meta)
   end
 
