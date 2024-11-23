@@ -2,17 +2,15 @@
 # vim: ft=liq ts=4 sw=4 sts=2 et ai fdm=marker
 
 # Sound effects
-elevator = playlist.safe(id="elevator", reload_mode="watch",
+elevator = mksafe(playlist(id="elevator", reload_mode="watch",
                     mode="normal",
-                    basepath ^ "/jingles/elevator.m3u")
-elevator = audio_to_stereo(elevator)
+                    basepath ^ "/jingles/elevator.m3u"))
 elevator = rewrite_metadata([("title","$(title)"),
                              ("comment",streamurl)],elevator)
 
-sweeper  = playlist.safe(id="sweeper", reload_mode="watch",
+sweeper = mksafe(playlist(id="sweeper", reload_mode="watch",
                     mode="normal",
-                    basepath ^ "/jingles/sweeper.m3u")
-sweeper = audio_to_stereo(sweeper)
+                    basepath ^ "/jingles/sweeper.m3u"))
 sweeper = rewrite_metadata([("title","$(title)"),
                              ("comment",streamurl)],sweeper)
 
@@ -20,14 +18,12 @@ sweeper = rewrite_metadata([("title","$(title)"),
 nalist   = playlist(id="nalist", reload_mode="watch",
                     mode="normal",
                     basepath ^ "/mp3s/playlist.m3u")
-nalist   = audio_to_stereo(nalist)
 nalist   = rewrite_metadata([("title","$(title)"),
                              ("comment",streamurl)],nalist)
 
 musiclist = playlist(id="musiclist", reload_mode="watch",
                     mode="normal",
                     basepath ^ "/mp3s/playlist-v4vmusic.m3u")
-musiclist = audio_to_stereo(musiclist)
 musiclist = rewrite_metadata([("title","$(title)"),
                              ("comment",streamurl)],musiclist)
 
@@ -40,16 +36,17 @@ adamlive   = input.harbor(id="adamlive", "/",
 # Input harbor
 horolive = rewrite_metadata([("title", "LIVE: Dvorak and Horowitz Unplugged"),
                              ("comment",streamurl)],
-                             audio_to_stereo(input.harbor(id="horolive", "/",
+                             input.harbor(id="horolive", "/",
                              port=horo_inport,
                              password=inpass,
-                             icy=true)))
+                             icy=true))
 
 # Input harbor
 alsolive   = input.harbor(id="alsolive", "/",
                         port=also_inport,
                         password=inpass,
                         icy=true)
+#alsolive = rewrite_metadata([("title", "No Agenda Stream LIVE!"), ("comment", streamurl)], alsolive)
 
 # For some reason the last one in the list doesn't
 # skip the currently playing podcast after disconnect
@@ -77,6 +74,7 @@ end
 
 # The timed result
 stream   = fallback(track_sensitive=false,
+#	 playout(offair))
              [ switch(id="streamon", track_sensitive=false,
                  [({(4w or 7w) and 17h59m30s-17h59m49s},
                    playout(onair, jig=true))]),

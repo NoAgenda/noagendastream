@@ -6,21 +6,21 @@
 %include "include/secrets.liq"
 
 # Log dir
-set("log.file.path", basepath ^ "/logs/noagenda.log")
-set("init.concurrent",true)
-set("request.metadata_decoders.override",true)
-set("tag.encodings",["UTF-8","ISO-8859-1"])
+settings.log.file.path := basepath ^ "/logs/noagenda.log"
+settings.charset.encodings := ["UTF-8", "ISO-8859-1", "UTF-16"]
 
 # Reset output if latency becomes >30s
-set("root.max_latency",30.)
+# seems to be broken atm
+#settings.root.max_latency := 30.
 
 # Telnet settings
-set("server.telnet", true)
-set("server.telnet.bind_addr", "0.0.0.0")
-set("server.telnet.port", 2300)
+settings.server.telnet := true
+settings.server.telnet.bind_addr := "0.0.0.0"
+settings.server.telnet.port := 2300
 
 # Incoming stream's settings
-set("harbor.bind_addr","0.0.0.0")
+settings.harbor.bind_addrs := ["0.0.0.0"]
+
 
 # Stream public info
 streamname  = "No Agenda Stream"
@@ -31,24 +31,23 @@ musicname  = "No Agenda Stream v4v Music"
 musicdesc  = "All v4v music, no commercials. No Agenda."
 
 
-# The actual funky stuff happens
-# via these included files
+# The actual funky stuff happens via these included files
 %include "include/library.liq"
 %include "include/radio.liq"
 
 def pushit(i, h, n, d, m, s)
   output.icecast(%mp3.vbr(id3v2=true, internal_quality=4),
-                 id           = i,
-                 host         = h,
-                 port         = streamport,
-                 encoding     = "UTF-8",
-                 password     = streampass,
-                 name         = n,
-                 description  = d,
-                 genre        = streamgenre,
-                 url          = streamurl,
-                 mount        = m,
-                 icy_metadata = "true",
+                 id                = i,
+                 host              = h,
+                 port              = streamport,
+                 encoding          = "UTF-8",
+                 password          = streampass,
+                 name              = n,
+                 description       = d,
+                 genre             = streamgenre,
+                 url               = streamurl,
+                 mount             = m,
+                 send_icy_metadata = true,
                  s)
 end
 
