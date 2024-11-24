@@ -13,15 +13,14 @@ end
 
 #####################
 def audio_process(s)
-  gain = interactive.float("compress.gain", 3.)
-  ratio = 3. # interactive.float("compress.ratio", 3.)
-  threshold = interactive.float("compress.threshold", -15.)
+  gain = ref(3.)
+  ratio = ref(3.)
+  threshold = ref(-15.)
+  target = ref(-13.)
 
-  target = interactive.float("norm.target", -13.)
-
-  s = normalize(target=target, s)
-  s = compress(gain=gain, ratio=ratio, threshold=threshold, s)
-  s
+  s = normalize(target=target(), s)
+  s = compress(gain=gain(), ratio=ratio(), threshold=threshold(), s)
+  s.{processing_parameters={gain=gain, ratio=ratio, threshold=threshold, target=target}}
 end
 ########################################
 # Manually update icecast metadata via telnet
