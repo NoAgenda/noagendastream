@@ -90,4 +90,4 @@ server.register(namespace=source.id(nalist),
                 description="Seek to a relative position \
                              in source #{source.id(nalist)}",
                 usage="seek <duration>",
-                "seek",seek(nalist))
+                "seek", fun(t) -> seek(nalist, t))
