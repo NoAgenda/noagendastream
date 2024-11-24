@@ -6,6 +6,7 @@ basepath = "/stor/nastream"
 
 # Stream private info
 streammount = "somemount"
+musicmount  = "musicmount"
 streampass  = "somepass"
 inpass      = "srcpass"
 
