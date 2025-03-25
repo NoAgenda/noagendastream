@@ -9,10 +9,6 @@
 settings.log.file.path := basepath ^ "/logs/noagenda.log"
 settings.charset.encodings := ["UTF-8", "ISO-8859-1", "UTF-16"]
 
-# Reset output if latency becomes >30s
-# seems to be broken atm
-#settings.root.max_latency := 30.
-
 # Telnet settings
 settings.server.telnet := true
 settings.server.telnet.bind_addr := "0.0.0.0"
