@@ -17,12 +17,14 @@ sweeper = rewrite_metadata([("title","$(title)"),
 # List of shows
 nalist   = playlist(id="nalist", reload_mode="watch",
                     mode="normal",
+                    prefetch=3,
                     basepath ^ "/mp3s/playlist.m3u")
 nalist   = rewrite_metadata([("title","$(title)"),
                              ("comment",streamurl)],nalist)
 
 musiclist = playlist(id="musiclist", reload_mode="watch",
                     mode="normal",
+                    prefetch=3,
                     basepath ^ "/mp3s/playlist-v4vmusic.m3u")
 musiclist = rewrite_metadata([("title","$(title)"),
                              ("comment",streamurl)],musiclist)
