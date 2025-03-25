@@ -30,9 +30,12 @@ musiclist = rewrite_metadata([("title","$(title)"),
                              ("comment",streamurl)],musiclist)
 
 # Input harbor
+def_buffer = 5. # seconds to buffer
+
 adamlive   = input.harbor(id="adamlive", "/",
                         port=adam_inport,
                         password=inpass,
+                        buffer=def_buffer,
                         icy=true)
 
 # Input harbor
@@ -41,12 +44,14 @@ horolive = rewrite_metadata([("title", "LIVE: Dvorak and Horowitz Unplugged"),
                              input.harbor(id="horolive", "/",
                              port=horo_inport,
                              password=inpass,
+                             buffer=def_buffer,
                              icy=true))
 
 # Input harbor
 alsolive   = input.harbor(id="alsolive", "/",
                         port=also_inport,
                         password=inpass,
+                        buffer=def_buffer,
                         icy=true)
 
 onair    = mksafe(rotate(id="onair",  [elevator,sweeper]))
