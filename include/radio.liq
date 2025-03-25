@@ -48,38 +48,58 @@ alsolive   = input.harbor(id="alsolive", "/",
                         port=also_inport,
                         password=inpass,
                         icy=true)
-#alsolive = rewrite_metadata([("title", "No Agenda Stream LIVE!"), ("comment", streamurl)], alsolive)
-
-# For some reason the last one in the list doesn't
-# skip the currently playing podcast after disconnect
-# so, let's add another one, but 'noop' it - not activate it.
-nooplive   = input.harbor(id="nooplive", "/",
-                        port=noop_inport,
-                        password=inpass,
-                        icy=true)
 
 onair    = mksafe(rotate(id="onair",  [elevator,sweeper]))
 offair   = mksafe(rotate(id="offair", [nalist,sweeper]))
 
-# Playout routine
-def playout(f, ~jig=false, ~skip_target=nalist, ~playonce=sweeper)
-  def trans(a, b)
-    source.skip(a)
-    if jig then
-      source.skip(skip_target)
-    end
-    sequence([a,b])
-  end
-  fallback(track_sensitive=false,transitions=[trans,trans],
-           [adamlive, alsolive, horolive, nooplive, once(playonce), f])
+# Helper to check if a source is one of the active live inputs
+def is_live_input(s) =
+  let sid = source.id(s)
+  sid == source.id(adamlive) or
+  sid == source.id(alsolive) or
+  sid == source.id(horolive)
 end
 
-# The timed result
+# The transition function that determines HOW we switch
+def custom_transition(a, b) =
+  log(level=3, "Transition START: from '#{source.id(a)}' to '#{source.id(b)}'")
+
+  # CONDITION: Are we switching from a LIVE input BACK to the OFFAIR playlist?
+  if is_live_input(a) and source.id(b) == source.id(offair) then
+    log(level=3, "Transition ACTION: Standard abrupt switch to new source.")
+    # Simply return the new source 'b' for an abrupt transition.
+    b
+  # ELSE: For all other transitions (e.g., within nalist, from playlist to live)
+  else
+    log(level=3, "Transition DETECTED: Live input ended, falling back to offair playlist.")
+    log(level=3, "Transition ACTION: Skipping current nalist track and playing sweeper first.")
+
+    # 1. Skip the current/interrupted track in nalist
+    #    This ensures 'offair' will grab the NEXT one.
+    source.skip(nalist)
+
+    # 2. Return a sequence: FIRST the sweeper, THEN the offair source (which will start the next nalist track)
+    sequence([sweeper, b])
+  end
+end
+
+# Playout routine now uses 'custom_transition'
+def playout(fallback_source) =
+  # The live sources, plus 'once(sweeper)' as a temporary filler
+  # if there is NO live source at startup.
+  # The 'fallback_source' is typically 'onair' or 'offair'.
+  fallback(id="main_fallback", # Give the fallback an ID for logging/debugging
+           track_sensitive=false,
+           transitions=[custom_transition], # Use our new transition logic!
+           [adamlive, alsolive, horolive, once(sweeper), fallback_source])
+end
+
+# The timed result (stream definition) now uses the new playout structure
 stream   = fallback(track_sensitive=false,
-#	 playout(offair))
              [ switch(id="streamon", track_sensitive=false,
-                 [({(4w or 7w) and 17h59m30s-17h59m49s},
-                   playout(onair, jig=true))]),
+                 # During live hours, use 'onair' as the fallback within playout
+                 [({(4w or 7w) and 17h59m30s-17h59m49s}, playout(onair))]),
+               # Outside live hours, use 'offair' as the fallback within playout
                playout(offair)])
 
 # ..which we want to process
