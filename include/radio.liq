@@ -93,3 +93,29 @@ server.register(namespace=source.id(nalist),
                              in source #{source.id(nalist)}",
                 usage="seek <duration>",
                 "seek", fun(t) -> seek(nalist, t))
+
+# Function to show the currently playing content
+def show_current(source_name)
+  # Select the source based on the input parameter
+  current_source = if source_name == "music" then musicstream else stream end
+
+  # Get the last metadata from the source
+  meta = source.last_metadata(current_source)
+
+  # Use null.case to handle the presence or absence of metadata
+  result = null.case(meta,
+    # If there's no metadata (nothing)
+    fun () -> "No metadata available - likely a live stream is currently playing",
+    # If there is metadata (something)
+    fun (m) -> "Currently playing: " ^ m["title"] ##^ " (Comment: " ^ m["comment"] ^ ")"
+  )
+
+  # Return the result
+  result
+end
+
+# Register the command with the telnet server
+server.register("current",
+                description="Show what is currently playing (usage: current [stream|music])",
+                usage="current [stream|music]",
+                show_current)
