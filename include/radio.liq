@@ -30,7 +30,7 @@ musiclist = rewrite_metadata([("title","$(title)"),
                              ("comment",streamurl)],musiclist)
 
 # Input harbor
-def_buffer = 5. # seconds to buffer
+def_buffer = 10. # seconds to buffer
 
 adamlive   = input.harbor(id="adamlive", "/",
                         port=adam_inport,
