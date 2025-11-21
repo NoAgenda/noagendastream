@@ -103,7 +103,11 @@ end
 stream   = fallback(track_sensitive=false,
              [ switch(id="streamon", track_sensitive=false,
                  # During live hours, use 'onair' as the fallback within playout
-                 [({(4w or 7w) and 17h59m30s-17h59m49s}, playout(onair))]),
+                 ## Summer hours #fuckDST
+                 #[({(4w or 7w) and 17h59m30s-17h59m49s}, playout(onair))]),
+                 ## Winter hours #fuckDST
+                 [({(4w or 7w) and 14h59m30s-20h59m49s}, playout(onair))]),
+
                # Outside live hours, use 'offair' as the fallback within playout
                playout(offair)])
 
