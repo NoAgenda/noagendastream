@@ -129,7 +129,7 @@ def show_current(source_name)
   current_source = if source_name == "music" then musicstream else stream end
 
   # Get the last metadata from the source
-  meta = source.last_metadata(current_source)
+  meta = current_source.last_metadata()
 
   # Use null.case to handle the presence or absence of metadata
   result = null.case(meta,
