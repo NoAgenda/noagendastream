@@ -68,15 +68,11 @@ end
 # The transition function that determines HOW we switch
 def custom_transition(a, b) =
   log(level=3, "Transition START: from '#{source.id(a)}' to '#{source.id(b)}'")
+  log(level=3, "Transition INFO: live? #{is_live_input(a)} | target '#{source.id(b)}'")
 
-  # CONDITION: Are we switching from a LIVE input BACK to the OFFAIR playlist?
-  if is_live_input(a) and source.id(b) == source.id(offair) then
-    log(level=3, "Transition ACTION: Standard abrupt switch to new source.")
-    # Simply return the new source 'b' for an abrupt transition.
-    b
-  # ELSE: For all other transitions (e.g., within nalist, from playlist to live)
-  else
-    log(level=3, "Transition DETECTED: Live input ended, falling back to offair playlist.")
+  # CONDITION: Are we switching away from a LIVE input?
+  if is_live_input(a) then
+    log(level=3, "Transition DETECTED: Live input ended, falling back to offair/playlist.")
     log(level=3, "Transition ACTION: Skipping current nalist track and playing sweeper first.")
 
     # 1. Skip the current/interrupted track in nalist
@@ -85,17 +81,22 @@ def custom_transition(a, b) =
 
     # 2. Return a sequence: FIRST the sweeper, THEN the offair source (which will start the next nalist track)
     sequence([sweeper, b])
+  # ELSE: For all other transitions (e.g., within nalist, from playlist to live)
+  else
+    log(level=3, "Transition ACTION: Standard abrupt switch to new source.")
+    # Simply return the new source 'b' for an abrupt transition.
+    b
   end
 end
 
-# Playout routine now uses 'custom_transition'
 def playout(fallback_source) =
   # The live sources, plus 'once(sweeper)' as a temporary filler
   # if there is NO live source at startup.
   # The 'fallback_source' is typically 'onair' or 'offair'.
   fallback(id="main_fallback", # Give the fallback an ID for logging/debugging
            track_sensitive=false,
-           transitions=[custom_transition], # Use our new transition logic!
+           transitions=[custom_transition, custom_transition, custom_transition,
+                        custom_transition, custom_transition],
            [adamlive, alsolive, horolive, once(sweeper), fallback_source])
 end
 
