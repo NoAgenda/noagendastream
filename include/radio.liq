@@ -38,7 +38,7 @@ adamlive   = input.harbor(id="adamlive", "/",
                         buffer=def_buffer,
                         icy=true)
 
-darrenlive = input.harbor(id="adamlive", "/",
+darrenlive = input.harbor(id="darrenlive", "/",
                         port=darren_inport,
                         password=darrenpass,
                         buffer=def_buffer,
