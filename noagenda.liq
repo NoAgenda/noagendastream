@@ -51,13 +51,5 @@ end
 
 clock.assign_new(id="naclock",[
   pushit(nastream1_name,  nastream1_host,  streamname,  streamdesc,  streammount,  stream),
-  pushit(nastream2_name,  nastream2_host,  streamname,  streamdesc,  streammount,  stream),
-  pushit(nastream3_name,  nastream3_host,  streamname,  streamdesc,  streammount,  stream),
-  pushit(nastream4_name,  nastream4_host,  streamname,  streamdesc,  streammount,  stream),
-
   pushit(nastream1_name,  nastream1_host,  musicname,   musicdesc,   musicmount,   musicstream),
-  pushit(nastream2_name,  nastream2_host,  musicname,   musicdesc,   musicmount,   musicstream),
-  pushit(nastream3_name,  nastream3_host,  musicname,   musicdesc,   musicmount,   musicstream),
-  pushit(nastream4_name,  nastream4_host,  musicname,   musicdesc,   musicmount,   musicstream),
-
 ])

@@ -49,9 +49,6 @@ def icy_update(v) =
 
   # Update metadata
   upd(nastream1_host)
-  upd(nastream2_host)
-  upd(nastream3_host)
-  upd(nastream4_host)
   "Done !"
 end
 
