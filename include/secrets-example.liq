@@ -5,6 +5,7 @@
 basepath = "/stor/nastream"
 
 # Stream private info
+pubip4      = "203.0.113.1"
 streammount = "somemount"
 musicmount  = "musicmount"
 streampass  = "somepass"
