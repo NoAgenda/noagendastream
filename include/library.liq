@@ -61,17 +61,3 @@ server.register("update", namespace="metadata",
                  usage="update song==foo,,album==bar,..",
                  icy_update)
 
-## Rewrite metadata on the fly using a list of (target, rule).
-## @category Source / Track Processing
-## @param l  List of (target, value) rewriting rules
-## @param ~insert_missing \
-##           Treat track beginnings without metadata \
-##           as having empty ones.
-##
-
-def rewrite_metadata(l, ~insert_missing=true, s)
-  metadata.map(fun(m) -> list.map(fun(pair) -> begin
-    let (label, pattern) = pair
-    (label, pattern % m)
-  end, l), insert_missing=insert_missing, s)
-end
