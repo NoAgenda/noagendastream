@@ -34,7 +34,13 @@ def_buffer = 10. # seconds to buffer
 
 adamlive   = input.harbor(id="adamlive", "/",
                         port=adam_inport,
-                        password=inpass,
+                        password=adampass,
+                        buffer=def_buffer,
+                        icy=true)
+
+darrenlive = input.harbor(id="adamlive", "/",
+                        port=darren_inport,
+                        password=darrenpass,
                         buffer=def_buffer,
                         icy=true)
 
@@ -61,19 +67,18 @@ offair   = mksafe(rotate(id="offair", [nalist,sweeper]))
 def is_live_input(s) =
   let sid = source.id(s)
   sid == source.id(adamlive) or
-  sid == source.id(alsolive) or
-  sid == source.id(horolive)
+  sid == source.id(darrenlive) or
+  sid == source.id(horolive) or
+  sid == source.id(alsolive)
 end
 
 # The transition function that determines HOW we switch
 def custom_transition(a, b) =
-  log(level=3, "Transition START: from '#{source.id(a)}' to '#{source.id(b)}'")
-  log(level=3, "Transition INFO: live? #{is_live_input(a)} | target '#{source.id(b)}'")
+  log(level=3, "Transition: '#{source.id(a)}' -> '#{source.id(b)}' (live input? #{is_live_input(a)})")
 
   # CONDITION: Are we switching away from a LIVE input?
   if is_live_input(a) then
-    log(level=3, "Transition DETECTED: Live input ended, falling back to offair/playlist.")
-    log(level=3, "Transition ACTION: Skipping current nalist track and playing sweeper first.")
+    log(level=3, "Transition action: live ended; skip nalist track, play sweeper, then resume offair (target id '#{source.id(b)}').")
 
     # 1. Skip the current/interrupted track in nalist
     #    This ensures 'offair' will grab the NEXT one.
@@ -83,7 +88,7 @@ def custom_transition(a, b) =
     sequence([sweeper, b])
   # ELSE: For all other transitions (e.g., within nalist, from playlist to live)
   else
-    log(level=3, "Transition ACTION: Standard abrupt switch to new source.")
+    log(level=3, "Transition action: standard switch to '#{source.id(b)}'.")
     # Simply return the new source 'b' for an abrupt transition.
     b
   end
@@ -97,7 +102,7 @@ def playout(fallback_source) =
            track_sensitive=false,
            transitions=[custom_transition, custom_transition, custom_transition,
                         custom_transition, custom_transition],
-           [adamlive, alsolive, horolive, once(sweeper), fallback_source])
+           [adamlive, darrenlive, horolive, alsolive, once(sweeper), fallback_source])
 end
 
 # The timed result (stream definition) now uses the new playout structure

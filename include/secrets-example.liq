@@ -5,17 +5,20 @@
 basepath = "/stor/nastream"
 
 # Stream private info
-pubip4      = "203.0.113.1"
-streammount = "somemount"
-musicmount  = "musicmount"
-streampass  = "somepass"
-inpass      = "srcpass"
+pubip4        = "203.0.113.1"
+streammount   = "somemount"
+musicmount    = "musicmount"
+streampass    = "somepass"
+adampass      = "otherpass"
+darrenpass    = "0th3rp455"
+inpass        = "srcpass"
 
-streamport  = 3040
-adam_inport = 4700
-horo_inport = 4702
-also_inport = 4704
-noop_inport = 4800
+streamport    = 3040
+adam_inport   = 4700
+darren_inport = 4701
+horo_inport   = 4702
+also_inport   = 4704
+noop_inport   = 4800
 
 nastream1_name = "alpha"
 nastream2_name = "beta"
