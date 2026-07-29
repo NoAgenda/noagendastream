@@ -11,13 +11,11 @@ settings.charset.encodings := ["UTF-8", "ISO-8859-1", "UTF-16"]
 
 # Telnet settings
 settings.server.telnet := true
-# settings.server.telnet.bind_addr := "0.0.0.0"
-settings.server.telnet.bind_addr := "127.0.0.1"
+settings.server.telnet.bind_addr := "0.0.0.0"
 settings.server.telnet.port := 2300
 
 # Incoming stream's settings
-# settings.harbor.bind_addrs := ["0.0.0.0"]
-settings.harbor.bind_addrs := [ pubip4 ]
+settings.harbor.bind_addrs := ["0.0.0.0"]
 
 
 # Stream public info
