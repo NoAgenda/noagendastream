@@ -101,7 +101,7 @@ def playout(fallback_source) =
   fallback(id="main_fallback", # Give the fallback an ID for logging/debugging
            track_sensitive=false,
            transitions=[custom_transition, custom_transition, custom_transition,
-                        custom_transition, custom_transition],
+                        custom_transition, custom_transition, custom_transition],
            [adamlive, darrenlive, horolive, alsolive, once(sweeper), fallback_source])
 end
 
@@ -110,9 +110,9 @@ stream   = fallback(track_sensitive=false,
              [ switch(id="streamon", track_sensitive=false,
                  # During live hours, use 'onair' as the fallback within playout
                  ## Summer hours #fuckDST
-                 #[({(4w or 7w) and 17h59m30s-17h59m49s}, playout(onair))]),
+                 [({(4w or 7w) and 13h59m30s-19h59m49s}, playout(onair))]),
                  ## Winter hours #fuckDST
-                 [({(4w or 7w) and 14h59m30s-20h59m49s}, playout(onair))]),
+#                 [({(4w or 7w) and 14h59m30s-20h59m49s}, playout(onair))]),
 
                # Outside live hours, use 'offair' as the fallback within playout
                playout(offair)])
