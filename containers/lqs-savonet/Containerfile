@@ -1,0 +1,21 @@
+# 2.3.0-rc2
+#FROM savonet/liquidsoap:faffb13
+
+FROM docker.io/savonet/liquidsoap:v2.3.2
+#FROM docker.io/savonet/liquidsoap:rolling-release-v2.4.x
+
+MAINTAINER Mark van Dijk <operator+dockerfile@noagendastream.com>
+
+ENTRYPOINT []
+
+# Sync with rbemrose uid/gid
+# only on v2.3.0-rc2 and newer
+USER root
+#
+RUN set -ex; \
+    usermod -u 1002 -g 100 liquidsoap && \
+    chown -R 1002:100 /var/cache/liquidsoap
+
+USER liquidsoap
+
+CMD ["/usr/bin/liquidsoap", "/etc/liquidsoap/noagenda.liq"]
