@@ -6,13 +6,13 @@
 %include "include/secrets.liq"
 
 # Log dir
-settings.log.file.path := basepath ^ "/logs/noagenda.log"
+settings.log.file.path := basepath ^ "/logs/" ^ environment.get("NA_LOG_FILE", default="noagenda.log")
 settings.charset.encodings := ["UTF-8", "ISO-8859-1", "UTF-16"]
 
 # Telnet settings
 settings.server.telnet := true
 settings.server.telnet.bind_addr := "0.0.0.0"
-settings.server.telnet.port := 2300
+settings.server.telnet.port := int_of_string(environment.get("NA_TELNET_PORT", default="2300"))
 
 # Incoming stream's settings
 settings.harbor.bind_addrs := ["0.0.0.0"]
