@@ -14,8 +14,8 @@ until the `next` branch has been validated on the test stream.
 
 ## Build
 
-CI builds this image on every push to `stable` and `next` and publishes to
-GHCR:
+CI builds this image on every push (all branches and pull requests) and
+publishes to GHCR only on `stable` and `next`:
 
 ```text
 ghcr.io/noagenda/noagendastream:stable
