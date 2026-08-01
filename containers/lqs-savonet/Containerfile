@@ -4,8 +4,6 @@
 FROM docker.io/savonet/liquidsoap:v2.3.2
 #FROM docker.io/savonet/liquidsoap:rolling-release-v2.4.x
 
-
-
 ENTRYPOINT []
 
 # Sync liquidsoap uid/gid with the host account
