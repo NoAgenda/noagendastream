@@ -1,33 +1,35 @@
 # % -- include/radio.liq -- %
 # vim: ft=liq ts=4 sw=4 sts=2 et ai fdm=marker
 
+# Add the public stream URL while preserving each source's title and all
+# other metadata fields.
+def with_stream_metadata(m) =
+  [("title", m["title"]), ("comment", streamurl)]
+end
+
 # Sound effects
 elevator = mksafe(playlist(id="elevator", reload_mode="watch",
                     mode="normal",
                     basepath ^ "/jingles/elevator.m3u"))
-elevator = rewrite_metadata([("title","$(title)"),
-                             ("comment",streamurl)],elevator)
+elevator = metadata.map(with_stream_metadata, elevator)
 
 sweeper = mksafe(playlist(id="sweeper", reload_mode="watch",
                     mode="normal",
                     basepath ^ "/jingles/sweeper.m3u"))
-sweeper = rewrite_metadata([("title","$(title)"),
-                             ("comment",streamurl)],sweeper)
+sweeper = metadata.map(with_stream_metadata, sweeper)
 
 # List of shows
 nalist   = playlist(id="nalist", reload_mode="watch",
                     mode="normal",
                     prefetch=3,
                     basepath ^ "/mp3s/playlist.m3u")
-nalist   = rewrite_metadata([("title","$(title)"),
-                             ("comment",streamurl)],nalist)
+nalist   = metadata.map(with_stream_metadata, nalist)
 
 musiclist = playlist(id="musiclist", reload_mode="watch",
                     mode="normal",
                     prefetch=3,
                     basepath ^ "/mp3s/playlist-v4vmusic.m3u")
-musiclist = rewrite_metadata([("title","$(title)"),
-                             ("comment",streamurl)],musiclist)
+musiclist = metadata.map(with_stream_metadata, musiclist)
 
 # Input harbor
 def_buffer = 10. # seconds to buffer
@@ -45,13 +47,14 @@ darrenlive = input.harbor(id="darrenlive", "/",
                         icy=true)
 
 # Input harbor
-horolive = rewrite_metadata([("title", "LIVE: Dvorak and Horowitz Unplugged"),
-                             ("comment",streamurl)],
-                             input.harbor(id="horolive", "/",
-                             port=horo_inport,
-                             password=inpass,
-                             buffer=def_buffer,
-                             icy=true))
+horolive = metadata.map(
+  fun (_) -> [("title", "LIVE: Dvorak and Horowitz Unplugged"),
+              ("comment", streamurl)],
+  input.harbor(id="horolive", "/",
+               port=horo_inport,
+               password=inpass,
+               buffer=def_buffer,
+               icy=true))
 
 # Input harbor
 alsolive   = input.harbor(id="alsolive", "/",
