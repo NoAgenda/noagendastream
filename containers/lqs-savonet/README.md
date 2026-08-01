@@ -8,9 +8,9 @@ image.
 
 ## Base
 
-`docker.io/savonet/liquidsoap:v2.3.2` — the last liquidsoap release that ran
-without issues in production. Upstream has moved on; do not bump the base
-until the `next` branch has been validated on the test stream.
+`docker.io/savonet/liquidsoap:v2.4.5` — validated with the `next` branch on
+the test stream, including playlist playback, Icecast outputs, metadata,
+harbor input, live-source transitions, and an extended runtime test.
 
 ## Build
 
@@ -25,7 +25,7 @@ ghcr.io/noagenda/noagendastream:next
 Local builds (e.g. for a container runtime without registry access):
 
 ```sh
-podman build -t localhost/lqs-savonet:v2.3.2-250407T1327Z containers/lqs-savonet/
+podman build -t localhost/lqs-savonet:v2.4.5-260801T0932Z containers/lqs-savonet/
 ```
 
 The uid/gid sync in the Containerfile (liquidsoap → 1002:100) matches the
