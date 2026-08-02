@@ -6,8 +6,9 @@ ENTRYPOINT []
 USER root
 
 RUN set -ex; \
-    usermod -u 1002 -g 100 liquidsoap && \
-    chown -R 1002:100 /var/cache/liquidsoap
+    groupadd -g 1021 na-stream && \
+    usermod -u 1021 -g 1021 liquidsoap && \
+    chown -R 1021:1021 /var/cache/liquidsoap
 
 USER liquidsoap
 
