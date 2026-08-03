@@ -32,7 +32,7 @@ musicdesc  = "All v4v music, no commercials. No Agenda."
 %include "include/radio.liq"
 
 def pushit(i, h, n, d, m, s)
-  output.icecast(%mp3.vbr(id3v2=true, internal_quality=4),
+  output.icecast(%mp3.vbr(id3v2=true, internal_quality=4, samplerate=48000),
                  id                = i,
                  host              = h,
                  port              = streamport,
