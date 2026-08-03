@@ -35,8 +35,8 @@ the custom Liquidsoap server command:
 metadata.update song==<now playing text>
 ```
 
-That command uses `icy.update_metadata` for both Icecast outputs. A later track
-metadata event replaces the manual override in the normal way.
+That command uses `icy.update_metadata` for the main Icecast output. A later
+track metadata event replaces the manual override in the normal way.
 
 Host-specific helper scripts and `include/secrets.liq` are intentionally not
 stored in this repository.

@@ -28,8 +28,8 @@ Local builds (e.g. for a container runtime without registry access):
 podman build -t localhost/lqs-savonet:v2.4.5-260801T0932Z containers/lqs-savonet/
 ```
 
-The uid/gid sync in the Containerfile (liquidsoap → 1002:100) matches the
-deployment host account (uid/gid 1002:100) so `UserNS=keep-id`
+The uid/gid sync in the Containerfile (liquidsoap → 1021:1021) matches the
+deployment host account (uid/gid 1021:1021) so `UserNS=keep-id`
 in the Quadlets maps cleanly.
 
 Tag convention: `v<liquidsoap-version>-<build-timestamp UTC>`.
