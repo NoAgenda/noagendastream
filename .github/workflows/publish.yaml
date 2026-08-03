@@ -18,6 +18,20 @@ jobs:
         name: Checkout
         uses: actions/checkout@v4
       -
+        name: Check Liquidsoap configuration
+        shell: bash
+        run: |
+          cp include/secrets-example.liq include/secrets.liq
+          mkdir -p .ci-data/{logs,jingles,mp3s}
+          touch .ci-data/jingles/{elevator,sweeper}.m3u \
+                .ci-data/mp3s/{playlist,playlist-v4vmusic}.m3u
+          image=$(awk '$1 == "FROM" { print $2; exit }' containers/lqs-savonet/Containerfile)
+          docker run --rm --network=none \
+            --volume "$PWD:/etc/liquidsoap:ro" \
+            --volume "$PWD/.ci-data:/stor/nastream" \
+            --workdir /etc/liquidsoap \
+            "$image" --check noagenda.liq
+      -
         name: Determine publish target
         id: publish
         shell: bash
