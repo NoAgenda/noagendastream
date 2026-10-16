@@ -1,4 +1,4 @@
-FROM docker.io/savonet/liquidsoap:v2.4.5
+FROM docker.io/savonet/liquidsoap:v2.4.6
 
 ENTRYPOINT []
 
